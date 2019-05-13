@@ -19,6 +19,9 @@ public fun isDarkColor(colorCode: String): Boolean {
     throw NotImplementedError()
 }
 
+/**
+ *
+ */
 public fun toRGB(color: Color): RGB {
     val value = color.toString().split("x")[1]
 
@@ -33,6 +36,9 @@ public fun toRGB(colorCode: String): RGB {
     throw NotImplementedError()
 }
 
+/**
+ *
+ */
 public fun toRGBA(color: Color): RGBA {
     val value = color.toString().split("x")[1]
 
@@ -44,8 +50,32 @@ public fun toRGBA(color: Color): RGBA {
     )
 }
 
+public fun rgbToHTML() {
+
+}
+
+public fun rgbToHEX() {
+
+}
+
+public fun rgbToRGBA() {
+
+}
+
 public fun toRGBA(colorCode: String): RGBA {
     throw NotImplementedError()
+}
+
+public fun rgbaToHTML() {
+
+}
+
+public fun rgbaToHEX() {
+
+}
+
+public fun rgbaToRGB() {
+
 }
 
 public fun toHTML(color: Color): String {

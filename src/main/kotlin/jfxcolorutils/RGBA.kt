@@ -1,5 +1,7 @@
 package jfxcolorutils
 
+import kotlin.math.roundToInt
+
 @Suppress(
     "RedundantVisibilityModifier",
     "MemberVisibilityCanBePrivate",
@@ -18,8 +20,8 @@ public class RGBA(
     public fun toString(opacityFormat: RGBAOpacityFormat): String {
         return when (opacityFormat) {
             RGBAOpacityFormat.INTEGER -> "rgba($R, $G, $B, $A)"
-            RGBAOpacityFormat.DOUBLE -> "rgba($R, $G, $B, ${A / 255})"
-            RGBAOpacityFormat.PERCENTAGE -> "rgba($R, $G, $B, ${A / 2.55}%)"
+            RGBAOpacityFormat.DOUBLE -> "rgba($R, $G, $B, ${Math.round((A / 2.55 / 100) * 100) / 100.0})"
+            RGBAOpacityFormat.PERCENTAGE -> "rgba($R, $G, $B, ${(A / 2.55).roundToInt()}%)"
         }
     }
 
