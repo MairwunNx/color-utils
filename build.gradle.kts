@@ -1,6 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val projectVersion = "8.0.0.0"
+val projectVersion = "8.0.0"
 val projectGroup = "org.jfxextras"
 val projectArtifactId = "jfxcolorutils"
 
@@ -19,8 +19,6 @@ val projectTasks = tasks {
         dependsOn(JavaPlugin.CLASSES_TASK_NAME)
         classifier = "sources"
         from(sourceSets["main"].allSource)
-
-        doLast { addBuildNumber() }
     }
 
     artifacts {
@@ -69,12 +67,3 @@ publishing {
         }
     }
 }
-
-fun addBuildNumber() {
-    val num = readBuildNumbers("buildnumber.txt")[0]
-    val newBuildNum = num.toInt() + 1
-    val buildFileName = File("buildnumber.txt")
-    buildFileName.writeText("$newBuildNum\n")
-}
-
-fun readBuildNumbers(fileName: String): List<String> = File(fileName).readLines(Charsets.UTF_8)

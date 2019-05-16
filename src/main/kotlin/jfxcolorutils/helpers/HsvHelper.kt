@@ -1,6 +1,8 @@
-package jfxcolorutils
+package jfxcolorutils.helpers
 
+import jfxcolorutils.HSV
 import kotlin.math.roundToInt
+
 
 internal fun htmlToHsv(htmlColor: String): HSV {
     throw NotImplementedError()
@@ -21,41 +23,17 @@ internal fun rgbToHsv(rgbColor: String): HSV {
     val g: Double = colorArray[1].toDouble() / 255
     val b: Double = colorArray[2].toDouble() / 255
 
-    var h = 0.0
-    val s: Double
-    val v: Double
-
     val cMax: Double = maxOf(r, g, b)
     val cMin: Double = minOf(r, g, b)
     val delta: Double = cMax - cMin
 
-    v = cMax
-
-    s = when {
-        cMax <= 0.00001 -> 0.0
-        else -> delta / cMax
-    }
-
-    if (s == 0.0) {
-        h = 0.0
-    } else {
-        when {
-            r == cMax -> h = ((g - b) / delta)
-            g == cMax -> h = 2 + (b - r) / delta
-            b == cMax -> h = 4 + (r - g) / delta
-        }
-
-        h *= 60
-
-        if (h < 0.0) {
-            h += 360
-        }
-    }
+    val h: Double = calculateH(r, g, b, delta)
+    val s: Double = if (cMax < 0.00001) 0.0 else delta / cMax
 
     return HSV(
         h.roundToInt(),
         (s * 100).roundToInt(),
-        (v * 100).roundToInt()
+        (cMax * 100).roundToInt()
     )
 }
 
@@ -64,7 +42,18 @@ internal fun rgbaToHsv(rgbaColor: String): HSV {
 }
 
 internal fun hsvToHsv(hsvColor: String): HSV {
-    throw NotImplementedError()
+    val color = hsvColor
+        .replace("(", "")
+        .replace(")", "")
+        .replace(" ", "")
+        .replace("%", "")
+        .replace("°", "")
+    val colorArray = color.split(",")
+    return HSV(
+        colorArray[0].toInt(),
+        colorArray[1].toInt(),
+        colorArray[2].toInt()
+    )
 }
 
 internal fun hslToHsv(hslColor: String): HSV {
@@ -72,6 +61,16 @@ internal fun hslToHsv(hslColor: String): HSV {
 }
 
 internal fun hsbToHsv(hsbColor: String): HSV {
-    throw NotImplementedError()
+    val color = hsbColor
+        .replace("(", "")
+        .replace(")", "")
+        .replace(" ", "")
+        .replace("%", "")
+        .replace("°", "")
+    val colorArray = color.split(",")
+    return HSV(
+        colorArray[0].toInt(),
+        colorArray[1].toInt(),
+        colorArray[2].toInt()
+    )
 }
-

@@ -6,6 +6,14 @@
 package jfxcolorutils
 
 import javafx.scene.paint.Color
+import jfxcolorutils.helpers.*
+import jfxcolorutils.helpers.hexToHsv
+import jfxcolorutils.helpers.hsbToHsv
+import jfxcolorutils.helpers.hslToHsv
+import jfxcolorutils.helpers.hsvToHsv
+import jfxcolorutils.helpers.htmlToHsv
+import jfxcolorutils.helpers.rgbToHsv
+import jfxcolorutils.helpers.rgbaToHsv
 
 /**
  *
@@ -110,6 +118,47 @@ public fun toHsv(color: String): HSV {
         colorCode.startsWith("hsb(", true) -> {
             colorCode = colorCode.substring(3)
             return hsbToHsv(colorCode)
+        }
+        else -> {
+            throw IllegalArgumentException("Invalid color specification.")
+        }
+    }
+}
+
+/**
+ *
+ */
+public fun toHsb(color: String): HSB {
+    var colorCode = color
+
+    when {
+        colorCode.startsWith("#", true) -> {
+            colorCode = colorCode.substring(1)
+            return htmlToHsb(colorCode)
+        }
+        colorCode.startsWith("0x", true) -> {
+            colorCode = colorCode.substring(2)
+            return hexToHsb(colorCode)
+        }
+        colorCode.startsWith("rgb(", true) -> {
+            colorCode = colorCode.substring(3)
+            return rgbToHsb(colorCode)
+        }
+        colorCode.startsWith("rgba(", true) -> {
+            colorCode = colorCode.substring(3)
+            return rgbaToHsb(colorCode)
+        }
+        colorCode.startsWith("hsv(", true) -> {
+            colorCode = colorCode.substring(3)
+            return hsvToHsb(colorCode)
+        }
+        colorCode.startsWith("hsl(", true) -> {
+            colorCode = colorCode.substring(3)
+            return hslToHsb(colorCode)
+        }
+        colorCode.startsWith("hsb(", true) -> {
+            colorCode = colorCode.substring(3)
+            return hsbToHsb(colorCode)
         }
         else -> {
             throw IllegalArgumentException("Invalid color specification.")

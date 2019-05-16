@@ -17,6 +17,30 @@ internal class HsvTests {
     }
 
     @Test
+    fun convertHsvToHsv() {
+        assertEquals(
+            hsvColor,
+            toHsv(hsvColor).toString()
+        )
+    }
+
+    @Test
+    fun convertHsbToHsv() {
+        assertEquals(
+            "hsv(27, 84%, 100%)",
+            toHsv("hsb(27°, 84%, 100%)").toString()
+        )
+    }
+
+    @Test
+    fun convertHsbToHsvWithDegree() {
+        assertEquals(
+            "hsv(27°, 84%, 100%)",
+            toHsv("hsb(27°, 84%, 100%)").toString(true)
+        )
+    }
+
+    @Test
     fun convertRgbToHsvWithDegree() {
         assertEquals(
             hsvColorDegree,
