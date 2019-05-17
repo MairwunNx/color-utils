@@ -3,17 +3,17 @@
     "unused"
 )
 
-package jfxcolorutils
+package colorutils
 
 import javafx.scene.paint.Color
-import jfxcolorutils.helpers.*
-import jfxcolorutils.helpers.hexToHsv
-import jfxcolorutils.helpers.hsbToHsv
-import jfxcolorutils.helpers.hslToHsv
-import jfxcolorutils.helpers.hsvToHsv
-import jfxcolorutils.helpers.htmlToHsv
-import jfxcolorutils.helpers.rgbToHsv
-import jfxcolorutils.helpers.rgbaToHsv
+import colorutils.helpers.*
+import colorutils.helpers.hexToHsv
+import colorutils.helpers.hsbToHsv
+import colorutils.helpers.hslToHsv
+import colorutils.helpers.hsvToHsv
+import colorutils.helpers.htmlToHsv
+import colorutils.helpers.rgbToHsv
+import colorutils.helpers.rgbaToHsv
 
 /**
  *
@@ -34,7 +34,7 @@ public fun isDarkColor(color: String): Boolean = throw NotImplementedError()
  */
 public fun getBrightness(color: Color): Int {
     val rgb = toRGB(color)
-    return (rgb.R * 299 + rgb.G * 587 + rgb.B * 114) / 1000
+    return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000
 }
 
 public fun getBrightness(color: String): Int = throw NotImplementedError()

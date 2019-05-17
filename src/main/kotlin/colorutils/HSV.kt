@@ -1,4 +1,4 @@
-package jfxcolorutils
+package colorutils
 
 @Suppress(
     "RedundantVisibilityModifier",

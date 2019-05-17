@@ -1,4 +1,4 @@
-package jfxcolorutils
+package colorutils
 
 import javafx.scene.paint.Color
 import org.junit.jupiter.api.Assertions.assertEquals

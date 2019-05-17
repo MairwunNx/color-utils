@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val projectVersion = "8.0.0"
 val projectGroup = "org.jfxextras"
-val projectArtifactId = "jfxcolorutils"
+val projectArtifactId = "colorutils"
 
 plugins {
     kotlin("jvm") version "1.3.31"

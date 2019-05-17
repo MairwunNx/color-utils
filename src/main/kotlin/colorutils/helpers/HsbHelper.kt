@@ -1,6 +1,6 @@
-package jfxcolorutils.helpers
+package colorutils.helpers
 
-import jfxcolorutils.HSB
+import colorutils.HSB
 import kotlin.math.roundToInt
 
 

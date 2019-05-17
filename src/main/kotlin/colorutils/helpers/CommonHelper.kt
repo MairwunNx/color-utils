@@ -1,4 +1,4 @@
-package jfxcolorutils.helpers
+package colorutils.helpers
 
 internal fun calculateH(
     r: Double,
