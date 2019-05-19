@@ -1,8 +1,12 @@
 package colorutils.helpers
 
 import colorutils.HSB
+import colorutils.HSV
 import kotlin.math.roundToInt
 
+internal fun numberToHsb(numberColor: String): HSB {
+    throw NotImplementedError()
+}
 
 internal fun htmlToHsb(htmlColor: String): HSB {
     throw NotImplementedError()

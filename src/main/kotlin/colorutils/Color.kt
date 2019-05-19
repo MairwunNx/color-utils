@@ -5,15 +5,8 @@
 
 package colorutils
 
-import javafx.scene.paint.Color
 import colorutils.helpers.*
-import colorutils.helpers.hexToHsv
-import colorutils.helpers.hsbToHsv
-import colorutils.helpers.hslToHsv
-import colorutils.helpers.hsvToHsv
-import colorutils.helpers.htmlToHsv
-import colorutils.helpers.rgbToHsv
-import colorutils.helpers.rgbaToHsv
+import javafx.scene.paint.Color
 
 /**
  *
@@ -119,6 +112,12 @@ public fun toHsv(color: String): HSV {
             colorCode = colorCode.substring(3)
             return hsbToHsv(colorCode)
         }
+        colorCode.matches(Regex("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|0x([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) -> {
+            colorCode = colorCode
+                .replace("#", "")
+                .replace("0x", "")
+            return numberToHsv(colorCode)
+        }
         else -> {
             throw IllegalArgumentException("Invalid color specification.")
         }
@@ -159,6 +158,12 @@ public fun toHsb(color: String): HSB {
         colorCode.startsWith("hsb(", true) -> {
             colorCode = colorCode.substring(3)
             return hsbToHsb(colorCode)
+        }
+        colorCode.matches(Regex("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|0x([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) -> {
+            colorCode = colorCode
+                .replace("#", "")
+                .replace("0x", "")
+            return numberToHsb(colorCode)
         }
         else -> {
             throw IllegalArgumentException("Invalid color specification.")

@@ -1,6 +1,7 @@
 package colorutils
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
 internal class HsvTests {
@@ -62,5 +63,13 @@ internal class HsvTests {
             HSV(207, 100, 84).hashCode(),
             HSV(207, 100, 84).hashCode()
         )
+    }
+
+    @Test
+    fun invalidColor() {
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            toHsv("hwb(0, 17, 83)")
+        }
+        assertEquals("Invalid color specification.", exception.message)
     }
 }

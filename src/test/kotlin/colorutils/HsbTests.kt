@@ -63,4 +63,12 @@ internal class HsbTests {
             HSB(207, 100, 84).hashCode()
         )
     }
+
+    @Test
+    fun invalidColor() {
+        val exception = Assertions.assertThrows(IllegalArgumentException::class.java) {
+            toHsb("hwb(0, 17, 83)")
+        }
+        Assertions.assertEquals("Invalid color specification.", exception.message)
+    }
 }

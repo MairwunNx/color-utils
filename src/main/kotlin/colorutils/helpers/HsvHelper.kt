@@ -3,6 +3,9 @@ package colorutils.helpers
 import colorutils.HSV
 import kotlin.math.roundToInt
 
+internal fun numberToHsv(numberColor: String): HSV {
+    throw NotImplementedError()
+}
 
 internal fun htmlToHsv(htmlColor: String): HSV {
     throw NotImplementedError()
