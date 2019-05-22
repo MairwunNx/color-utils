@@ -3,6 +3,8 @@
     "unused"
 )
 
+// todo: add cmy and cmyk color conversions.
+
 package colorutils
 
 import colorutils.helpers.*
@@ -11,26 +13,21 @@ import javafx.scene.paint.Color
 /**
  *
  */
-public fun isLightColor(color: Color): Boolean = !isDarkColor(color)
-
-public fun isLightColor(color: String): Boolean = throw NotImplementedError()
+public fun isLightColor(color: String): Boolean = !isDarkColor(color)
 
 /**
  *
  */
-public fun isDarkColor(color: Color): Boolean = getBrightness(color) < 128
-
-public fun isDarkColor(color: String): Boolean = throw NotImplementedError()
+public fun isDarkColor(color: String): Boolean = getBrightness(color) < 128
 
 /**
  *
  */
-public fun getBrightness(color: Color): Int {
-    val rgb = toRGB(color)
-    return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000
+public fun getBrightness(color: String): Int {
+    //val rgb = toRGB(color)
+    //return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000
+    throw NotImplementedError()
 }
-
-public fun getBrightness(color: String): Int = throw NotImplementedError()
 
 /**
  *
@@ -44,8 +41,6 @@ public fun toRGB(color: Color): RGB {
         Integer.valueOf(value.substring(4, 6), 16)
     )
 }
-
-public fun toRGB(color: String): RGB = throw NotImplementedError()
 
 /**
  *
@@ -80,16 +75,42 @@ public fun randomHEXColor(): String {
 /**
  *
  */
+public fun toHtml(color: String): String {
+    throw NotImplementedError()
+}
+
+/**
+ *
+ */
+public fun toHex(color: String): String {
+    throw NotImplementedError()
+}
+
+/**
+ *
+ */
+public fun toRgb(color: String): RGB {
+    throw NotImplementedError()
+}
+
+/**
+ *
+ */
+public fun toRgba(color: String): RGBA {
+    throw NotImplementedError()
+}
+
+/**
+ *
+ */
 public fun toHsv(color: String): HSV {
     var colorCode = color
 
     when {
-        colorCode.startsWith("#", true) -> {
-            colorCode = colorCode.substring(1)
-            return htmlToHsv(colorCode)
-        }
-        colorCode.startsWith("0x", true) -> {
-            colorCode = colorCode.substring(2)
+        colorCode.matches(Regex("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|0x([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) -> {
+            colorCode = colorCode
+                .replace("#", "")
+                .replace("0x", "")
             return hexToHsv(colorCode)
         }
         colorCode.startsWith("rgb(", true) -> {
@@ -131,12 +152,10 @@ public fun toHsb(color: String): HSB {
     var colorCode = color
 
     when {
-        colorCode.startsWith("#", true) -> {
-            colorCode = colorCode.substring(1)
-            return htmlToHsb(colorCode)
-        }
-        colorCode.startsWith("0x", true) -> {
-            colorCode = colorCode.substring(2)
+        colorCode.matches(Regex("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|0x([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) -> {
+            colorCode = colorCode
+                .replace("#", "")
+                .replace("0x", "")
             return hexToHsb(colorCode)
         }
         colorCode.startsWith("rgb(", true) -> {
@@ -171,10 +190,41 @@ public fun toHsb(color: String): HSB {
     }
 }
 
-public fun toHtml(color: String) {
+/**
+ *
+ */
+public fun toHsl(color: String): HSL {
+    var colorCode = color
 
-}
-
-public fun toHex(color: String) {
-
+    when {
+        colorCode.matches(Regex("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|0x([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) -> {
+            colorCode = colorCode
+                .replace("#", "")
+                .replace("0x", "")
+            return hexToHsl(colorCode)
+        }
+        colorCode.startsWith("rgb(", true) -> {
+            colorCode = colorCode.substring(3)
+            return rgbToHsl(colorCode)
+        }
+        colorCode.startsWith("rgba(", true) -> {
+            colorCode = colorCode.substring(3)
+            return rgbaToHsl(colorCode)
+        }
+        colorCode.startsWith("hsv(", true) -> {
+            colorCode = colorCode.substring(3)
+            return hsvToHsl(colorCode)
+        }
+        colorCode.startsWith("hsl(", true) -> {
+            colorCode = colorCode.substring(3)
+            return hslToHsl(colorCode)
+        }
+        colorCode.startsWith("hsb(", true) -> {
+            colorCode = colorCode.substring(3)
+            return hsbToHsl(colorCode)
+        }
+        else -> {
+            throw IllegalArgumentException("Invalid color specification.")
+        }
+    }
 }
