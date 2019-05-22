@@ -23,3 +23,10 @@ internal fun calculateHueTerm(
     val res = 60 * (s + (g - b) / delta)
     return if (res > 0) res else res + 360
 }
+
+internal fun removeUnnecessaryChars(color: String): String = color
+    .replace("(", "")
+    .replace(")", "")
+    .replace(" ", "")
+    .replace("%", "")
+    .replace("°", "")

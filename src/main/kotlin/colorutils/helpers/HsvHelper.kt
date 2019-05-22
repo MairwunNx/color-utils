@@ -16,10 +16,7 @@ internal fun hexToHsv(hexColor: String): HSV {
 }
 
 internal fun rgbToHsv(rgbColor: String): HSV {
-    val color = rgbColor
-        .replace("(", "")
-        .replace(")", "")
-        .replace(" ", "")
+    val color = removeUnnecessaryChars(rgbColor)
     val colorArray = color.split(",")
 
     val r: Double = colorArray[0].toDouble() / 255
@@ -45,12 +42,7 @@ internal fun rgbaToHsv(rgbaColor: String): HSV {
 }
 
 internal fun hsvToHsv(hsvColor: String): HSV {
-    val color = hsvColor
-        .replace("(", "")
-        .replace(")", "")
-        .replace(" ", "")
-        .replace("%", "")
-        .replace("°", "")
+    val color = removeUnnecessaryChars(hsvColor)
     val colorArray = color.split(",")
     return HSV(
         colorArray[0].toInt(),
@@ -64,12 +56,7 @@ internal fun hslToHsv(hslColor: String): HSV {
 }
 
 internal fun hsbToHsv(hsbColor: String): HSV {
-    val color = hsbColor
-        .replace("(", "")
-        .replace(")", "")
-        .replace(" ", "")
-        .replace("%", "")
-        .replace("°", "")
+    val color = removeUnnecessaryChars(hsbColor)
     val colorArray = color.split(",")
     return HSV(
         colorArray[0].toInt(),
