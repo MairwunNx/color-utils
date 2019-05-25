@@ -1,5 +1,7 @@
 package colorutils.helpers
 
+// todo: add validate methods
+
 internal fun calculateH(
     r: Double,
     g: Double,

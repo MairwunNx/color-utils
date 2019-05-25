@@ -3,11 +3,26 @@ package colorutils
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
+import kotlin.system.measureTimeMillis
 
 internal class HsvTests {
+    private val hexColor: String = "#0078D7"
     private val rgbColor: String = "rgb(0, 118, 214)"
     private val hsvColor: String = "hsv(207, 100%, 84%)"
     private val hsvColorDegree: String = "hsv(207°, 100%, 84%)"
+
+    @Test
+    fun convertHexToHsv() {
+        val elapsed = measureTimeMillis {
+            toHsv(hexColor).toString()
+        }
+        println("convertHexToHsv: Done with $elapsed ms.")
+
+        assertEquals(
+            "hsv(207, 100%, 84%)",
+            toHsv(hexColor).toString()
+        )
+    }
 
     @Test
     fun convertRgbToHsv() {
@@ -70,6 +85,6 @@ internal class HsvTests {
         val exception = assertThrows(IllegalArgumentException::class.java) {
             toHsv("hwb(0, 17, 83)")
         }
-        assertEquals("Invalid color specification.", exception.message)
+        assertEquals("Not supported color specification.", exception.message)
     }
 }

@@ -75,22 +75,34 @@ public fun randomHEXColor(): String {
 /**
  *
  */
-public fun toHtml(color: String): String {
+public fun toHex(color: String, compensateOpacity: Boolean = false): String {
     throw NotImplementedError()
 }
 
 /**
  *
  */
-public fun toHex(color: String): String {
+public fun toHex8(color: String): String {
     throw NotImplementedError()
 }
 
 /**
  *
  */
-public fun toRgb(color: String): RGB {
-    throw NotImplementedError()
+public fun toRgb(color: String, compensateOpacity: Boolean = false): RGB {
+    var colorCode = color
+
+    when {
+        colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)$")) -> {
+            colorCode = colorCode
+                .replace("#", "")
+                .replace("0x", "")
+            return hexToRgb(colorCode)
+        }
+        else -> {
+            throw IllegalArgumentException("Not supported color specification.")
+        }
+    }
 }
 
 /**
@@ -103,44 +115,57 @@ public fun toRgba(color: String): RGBA {
 /**
  *
  */
-public fun toHsv(color: String): HSV {
+public fun toHsv(color: String, compensateOpacity: Boolean = false): HSV {
     var colorCode = color
 
     when {
-        colorCode.matches(Regex("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|0x([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) -> {
+        colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)$")) -> {
             colorCode = colorCode
                 .replace("#", "")
                 .replace("0x", "")
             return hexToHsv(colorCode)
         }
+        colorCode.matches(Regex("^#([A-Fa-f0-9]{8})|([A-Fa-f0-9]{8})|0x([A-Fa-f0-9]{8})$")) -> {
+            colorCode = colorCode
+                .replace("#", "")
+                .replace("0x", "")
+            return hex8ToHsv(colorCode, compensateOpacity)
+        }
         colorCode.startsWith("rgb(", true) -> {
             colorCode = colorCode.substring(3)
+            // done
             return rgbToHsv(colorCode)
         }
         colorCode.startsWith("rgba(", true) -> {
-            colorCode = colorCode.substring(3)
-            return rgbaToHsv(colorCode)
+            colorCode = colorCode.substring(4)
+            return rgbaToHsv(colorCode, compensateOpacity)
         }
         colorCode.startsWith("hsv(", true) -> {
             colorCode = colorCode.substring(3)
             return hsvToHsv(colorCode)
         }
-        colorCode.startsWith("hsl(", true) -> {
-            colorCode = colorCode.substring(3)
-            return hslToHsv(colorCode)
+        colorCode.startsWith("hsva(", true) -> {
+            colorCode = colorCode.substring(4)
+            return hsvaToHsv(colorCode, compensateOpacity)
         }
         colorCode.startsWith("hsb(", true) -> {
             colorCode = colorCode.substring(3)
             return hsbToHsv(colorCode)
         }
-        colorCode.matches(Regex("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|0x([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) -> {
-            colorCode = colorCode
-                .replace("#", "")
-                .replace("0x", "")
-            return numberToHsv(colorCode)
+        colorCode.startsWith("hsba(", true) -> {
+            colorCode = colorCode.substring(4)
+            return hsbaToHsv(colorCode, compensateOpacity)
+        }
+        colorCode.startsWith("hsl(", true) -> {
+            colorCode = colorCode.substring(3)
+            return hslToHsv(colorCode)
+        }
+        colorCode.startsWith("hsla(", true) -> {
+            colorCode = colorCode.substring(3)
+            return hslaToHsv(colorCode, compensateOpacity)
         }
         else -> {
-            throw IllegalArgumentException("Invalid color specification.")
+            throw IllegalArgumentException("Not supported color specification.")
         }
     }
 }
@@ -148,7 +173,14 @@ public fun toHsv(color: String): HSV {
 /**
  *
  */
-public fun toHsb(color: String): HSB {
+//public fun toHsva(color: String): HSVA {
+//    throw NotImplementedError()
+//}
+
+/**
+ *
+ */
+public fun toHsb(color: String, compensateOpacity: Boolean = false): HSB {
     var colorCode = color
 
     when {
@@ -193,7 +225,14 @@ public fun toHsb(color: String): HSB {
 /**
  *
  */
-public fun toHsl(color: String): HSL {
+//public fun toHsba(color: String): HSBA {
+//    throw NotImplementedError()
+//}
+
+/**
+ *
+ */
+public fun toHsl(color: String, compensateOpacity: Boolean = false): HSL {
     var colorCode = color
 
     when {
@@ -228,3 +267,10 @@ public fun toHsl(color: String): HSL {
         }
     }
 }
+
+/**
+ *
+ */
+//public fun toHsla(color: String): HSLA {
+//    throw NotImplementedError()
+//}

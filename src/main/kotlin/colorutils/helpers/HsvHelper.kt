@@ -1,17 +1,18 @@
 package colorutils.helpers
 
 import colorutils.HSV
+import colorutils.toRgb
 import kotlin.math.roundToInt
 
-internal fun numberToHsv(numberColor: String): HSV {
-    throw NotImplementedError()
-}
-
-internal fun htmlToHsv(htmlColor: String): HSV {
-    throw NotImplementedError()
-}
-
 internal fun hexToHsv(hexColor: String): HSV {
+    return rgbToHsv(
+        toRgb(hexColor).toString()
+            .replace("rgb(", "")
+            .replace(")", "")
+    )
+}
+
+internal fun hex8ToHsv(hex8Color: String, compensateOpacity: Boolean): HSV {
     throw NotImplementedError()
 }
 
@@ -37,7 +38,7 @@ internal fun rgbToHsv(rgbColor: String): HSV {
     )
 }
 
-internal fun rgbaToHsv(rgbaColor: String): HSV {
+internal fun rgbaToHsv(rgbaColor: String, compensateOpacity: Boolean): HSV {
     throw NotImplementedError()
 }
 
@@ -51,9 +52,10 @@ internal fun hsvToHsv(hsvColor: String): HSV {
     )
 }
 
-internal fun hslToHsv(hslColor: String): HSV {
+internal fun hsvaToHsv(hsvaColor: String, compensateOpacity: Boolean): HSV {
     throw NotImplementedError()
 }
+
 
 internal fun hsbToHsv(hsbColor: String): HSV {
     val color = removeUnnecessaryChars(hsbColor)
@@ -63,4 +65,16 @@ internal fun hsbToHsv(hsbColor: String): HSV {
         colorArray[1].toInt(),
         colorArray[2].toInt()
     )
+}
+
+internal fun hsbaToHsv(hsbaColor: String, compensateOpacity: Boolean): HSV {
+    throw NotImplementedError()
+}
+
+internal fun hslToHsv(hslColor: String): HSV {
+    throw NotImplementedError()
+}
+
+internal fun hslaToHsv(hslaColor: String, compensateOpacity: Boolean): HSV {
+    throw NotImplementedError()
 }
