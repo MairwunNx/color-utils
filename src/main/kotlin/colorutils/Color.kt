@@ -3,12 +3,9 @@
     "unused"
 )
 
-// todo: add cmy and cmyk color conversions.
-
 package colorutils
 
 import colorutils.helpers.*
-import javafx.scene.paint.Color
 
 /**
  *
@@ -26,49 +23,6 @@ public fun isDarkColor(color: String): Boolean = getBrightness(color) < 128
 public fun getBrightness(color: String): Int {
     //val rgb = toRGB(color)
     //return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000
-    throw NotImplementedError()
-}
-
-/**
- *
- */
-public fun toRGB(color: Color): RGB {
-    val value = color.toString().split("x")[1]
-
-    return RGB(
-        Integer.valueOf(value.substring(0, 2), 16),
-        Integer.valueOf(value.substring(2, 4), 16),
-        Integer.valueOf(value.substring(4, 6), 16)
-    )
-}
-
-/**
- *
- */
-public fun toRGBA(color: Color): RGBA {
-    val value = color.toString().split("x")[1]
-
-    return RGBA(
-        Integer.valueOf(value.substring(0, 2), 16),
-        Integer.valueOf(value.substring(2, 4), 16),
-        Integer.valueOf(value.substring(4, 6), 16),
-        Integer.valueOf(value.substring(6, 8), 16)
-    )
-}
-
-public fun randomRGBColor(): RGB {
-    throw NotImplementedError()
-}
-
-public fun randomRGBAColor(): RGBA {
-    throw NotImplementedError()
-}
-
-public fun randomHTMLColor(): String {
-    throw NotImplementedError()
-}
-
-public fun randomHEXColor(): String {
     throw NotImplementedError()
 }
 
@@ -119,6 +73,7 @@ public fun toHsv(color: String, compensateOpacity: Boolean = false): HSV {
     var colorCode = color
 
     when {
+        // done
         colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)$")) -> {
             colorCode = colorCode
                 .replace("#", "")
@@ -131,9 +86,9 @@ public fun toHsv(color: String, compensateOpacity: Boolean = false): HSV {
                 .replace("0x", "")
             return hex8ToHsv(colorCode, compensateOpacity)
         }
+        // done
         colorCode.startsWith("rgb(", true) -> {
             colorCode = colorCode.substring(3)
-            // done
             return rgbToHsv(colorCode)
         }
         colorCode.startsWith("rgba(", true) -> {
@@ -184,11 +139,17 @@ public fun toHsb(color: String, compensateOpacity: Boolean = false): HSB {
     var colorCode = color
 
     when {
-        colorCode.matches(Regex("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|0x([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) -> {
+        colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)$")) -> {
             colorCode = colorCode
                 .replace("#", "")
                 .replace("0x", "")
             return hexToHsb(colorCode)
+        }
+        colorCode.matches(Regex("^#([A-Fa-f0-9]{8})|([A-Fa-f0-9]{8})|0x([A-Fa-f0-9]{8})$")) -> {
+            colorCode = colorCode
+                .replace("#", "")
+                .replace("0x", "")
+            return hex8ToHsb(colorCode, compensateOpacity)
         }
         colorCode.startsWith("rgb(", true) -> {
             colorCode = colorCode.substring(3)
@@ -210,14 +171,8 @@ public fun toHsb(color: String, compensateOpacity: Boolean = false): HSB {
             colorCode = colorCode.substring(3)
             return hsbToHsb(colorCode)
         }
-        colorCode.matches(Regex("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|0x([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) -> {
-            colorCode = colorCode
-                .replace("#", "")
-                .replace("0x", "")
-            return numberToHsb(colorCode)
-        }
         else -> {
-            throw IllegalArgumentException("Invalid color specification.")
+            throw IllegalArgumentException("Not supported color specification.")
         }
     }
 }

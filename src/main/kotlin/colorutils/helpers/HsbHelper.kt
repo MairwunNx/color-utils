@@ -1,19 +1,18 @@
 package colorutils.helpers
 
 import colorutils.HSB
+import colorutils.toRgb
 import kotlin.math.roundToInt
 
-internal fun numberToHsb(numberColor: String): HSB {
-    println(numberColor.toInt(16))
-    return HSB(1, 1, 1)
-    //throw NotImplementedError()
-}
-
-internal fun htmlToHsb(htmlColor: String): HSB {
-    throw NotImplementedError()
-}
-
 internal fun hexToHsb(hexColor: String): HSB {
+    return rgbToHsb(
+        toRgb(hexColor).toString()
+            .replace("rgb(", "")
+            .replace(")", "")
+    )
+}
+
+internal fun hex8ToHsb(hexColor: String, compensateOpacity: Boolean): HSB {
     throw NotImplementedError()
 }
 
