@@ -19,22 +19,11 @@ internal fun hex8ToHsv(hex8Color: String, compensateOpacity: Boolean): HSV {
 internal fun rgbToHsv(rgbColor: String): HSV {
     val color = removeUnnecessaryChars(rgbColor)
     val colorArray = color.split(",")
-
-    val r: Double = colorArray[0].toDouble() / 255
-    val g: Double = colorArray[1].toDouble() / 255
-    val b: Double = colorArray[2].toDouble() / 255
-
-    val cMax: Double = maxOf(r, g, b)
-    val cMin: Double = minOf(r, g, b)
-    val delta: Double = cMax - cMin
-
-    val h: Double = calculateH(r, g, b, delta)
-    val s: Double = if (cMax < 0.00001) 0.0 else delta / cMax
-
+    val result = hsbAndHsvToRgb(colorArray)
     return HSV(
-        h.roundToInt(),
-        (s * 100).roundToInt(),
-        (cMax * 100).roundToInt()
+        result[0].roundToInt(),
+        (result[1] * 100).roundToInt(),
+        (result[2] * 100).roundToInt()
     )
 }
 

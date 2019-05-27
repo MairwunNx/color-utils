@@ -17,27 +17,13 @@ internal fun hex8ToHsb(hexColor: String, compensateOpacity: Boolean): HSB {
 }
 
 internal fun rgbToHsb(rgbColor: String): HSB {
-    val color = rgbColor
-        .replace("(", "")
-        .replace(")", "")
-        .replace(" ", "")
+    val color = removeUnnecessaryChars(rgbColor)
     val colorArray = color.split(",")
-
-    val r: Double = colorArray[0].toDouble() / 255
-    val g: Double = colorArray[1].toDouble() / 255
-    val b: Double = colorArray[2].toDouble() / 255
-
-    val cMax: Double = maxOf(r, g, b)
-    val cMin: Double = minOf(r, g, b)
-    val delta: Double = cMax - cMin
-
-    val h: Double = calculateH(r, g, b, delta)
-    val s: Double = if (cMax < 0.00001) 0.0 else delta / cMax
-
+    val result = hsbAndHsvToRgb(colorArray)
     return HSB(
-        h.roundToInt(),
-        (s * 100).roundToInt(),
-        (cMax * 100).roundToInt()
+        result[0].roundToInt(),
+        (result[1] * 100).roundToInt(),
+        (result[2] * 100).roundToInt()
     )
 }
 
@@ -46,12 +32,7 @@ internal fun rgbaToHsb(rgbaColor: String): HSB {
 }
 
 internal fun hsvToHsb(hsvColor: String): HSB {
-    val color = hsvColor
-        .replace("(", "")
-        .replace(")", "")
-        .replace(" ", "")
-        .replace("%", "")
-        .replace("°", "")
+    val color = removeUnnecessaryChars(hsvColor)
     val colorArray = color.split(",")
     return HSB(
         colorArray[0].toInt(),
@@ -65,12 +46,7 @@ internal fun hslToHsb(hslColor: String): HSB {
 }
 
 internal fun hsbToHsb(hsbColor: String): HSB {
-    val color = hsbColor
-        .replace("(", "")
-        .replace(")", "")
-        .replace(" ", "")
-        .replace("%", "")
-        .replace("°", "")
+    val color = removeUnnecessaryChars(hsbColor)
     val colorArray = color.split(",")
     return HSB(
         colorArray[0].toInt(),
