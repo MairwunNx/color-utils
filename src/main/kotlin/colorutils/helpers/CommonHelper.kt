@@ -1,12 +1,10 @@
 package colorutils.helpers
 
-// todo: add validate methods
-
 internal fun calculateH(
-    r: Double,
-    g: Double,
-    b: Double,
-    delta: Double
+        r: Double,
+        g: Double,
+        b: Double,
+        delta: Double
 ): Double {
     return when {
         r == b && g == b -> 0.0
@@ -17,18 +15,18 @@ internal fun calculateH(
 }
 
 internal fun calculateHueTerm(
-    s: Int,
-    g: Double,
-    b: Double,
-    delta: Double
+        s: Int,
+        g: Double,
+        b: Double,
+        delta: Double
 ): Double {
     val res = 60 * (s + (g - b) / delta)
     return if (res > 0) res else res + 360
 }
 
 internal fun removeUnnecessaryChars(color: String): String = color
-    .replace("(", "")
-    .replace(")", "")
-    .replace(" ", "")
-    .replace("%", "")
-    .replace("°", "")
+        .replace("(", "")
+        .replace(")", "")
+        .replace(" ", "")
+        .replace("%", "")
+        .replace("°", "")
