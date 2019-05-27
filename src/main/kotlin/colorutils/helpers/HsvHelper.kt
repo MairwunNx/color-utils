@@ -8,8 +8,19 @@ internal fun hexToHsv(hexColor: String): HSV = rgbToHsv(
     toRgb(hexColor).toString().removeSurrounding("rgb(", ")")
 )
 
-internal fun hex8ToHsv(hex8Color: String, compensateOpacity: Boolean): HSV {
-    throw NotImplementedError()
+internal fun hex8ToHsv(
+    hex8Color: String,
+    compensateOpacity: Boolean,
+    opacityBackground: String = "#fff"
+): HSV {
+    return if (!compensateOpacity) {
+        hexToHsv(hex8Color)
+    } else {
+        rgbToHsv(toRgb(
+            hex8Color,
+            true
+        ).toString().removeSurrounding("rgb(", ")"))
+    }
 }
 
 internal fun rgbToHsv(rgbColor: String): HSV {
