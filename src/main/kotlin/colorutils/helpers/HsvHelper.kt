@@ -4,13 +4,9 @@ import colorutils.HSV
 import colorutils.toRgb
 import kotlin.math.roundToInt
 
-internal fun hexToHsv(hexColor: String): HSV {
-    return rgbToHsv(
-        toRgb(hexColor).toString()
-            .replace("rgb(", "")
-            .replace(")", "")
-    )
-}
+internal fun hexToHsv(hexColor: String): HSV = rgbToHsv(
+    toRgb(hexColor).toString().removeSurrounding("rgb(", ")")
+)
 
 internal fun hex8ToHsv(hex8Color: String, compensateOpacity: Boolean): HSV {
     throw NotImplementedError()
