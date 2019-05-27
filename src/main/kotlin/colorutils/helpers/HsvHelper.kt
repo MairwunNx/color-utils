@@ -18,7 +18,8 @@ internal fun hex8ToHsv(
     } else {
         rgbToHsv(toRgb(
             hex8Color,
-            true
+            compensateOpacity,
+            opacityBackground
         ).toString().removeSurrounding("rgb(", ")"))
     }
 }

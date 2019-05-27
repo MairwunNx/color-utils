@@ -54,7 +54,7 @@ internal class HsvHelperKtTest {
         val elapsed = measureTimeMillis {
             Assertions.assertEquals(
                 "hsv(0, 0%, 25%)",
-                hex8ToHsv("2b2b2bE6", true).toString()
+                hex8ToHsv("2b2b2be6", true).toString()
             )
         }
         println("hex8WithOpacityWithCompensateOpacityToHsvTest done with ${elapsed}ms.")

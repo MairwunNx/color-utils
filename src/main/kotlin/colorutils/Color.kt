@@ -43,15 +43,25 @@ public fun toHex8(color: String): String {
 /**
  *
  */
-public fun toRgb(color: String, compensateOpacity: Boolean = false): RGB {
+public fun toRgb(
+    color: String,
+    compensateOpacity: Boolean = false,
+    opacityBackground: String = "#fff"
+): RGB {
     var colorCode = color
 
     when {
-        colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)$")) -> {
+        (colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)\$")) && colorCode.length < 8) -> {
             colorCode = colorCode
                 .replace("#", "")
                 .replace("0x", "")
             return hexToRgb(colorCode)
+        }
+        colorCode.matches(Regex("^#([A-Fa-f0-9]{8})|([A-Fa-f0-9]{8})|0x([A-Fa-f0-9]{8})\$")) -> {
+            colorCode = colorCode
+                .replace("#", "")
+                .replace("0x", "")
+            return hex8ToRgb(colorCode, compensateOpacity, opacityBackground)
         }
         else -> {
             throw IllegalArgumentException("Not supported color specification.")
@@ -63,17 +73,38 @@ public fun toRgb(color: String, compensateOpacity: Boolean = false): RGB {
  *
  */
 public fun toRgba(color: String): RGBA {
-    throw NotImplementedError()
+    var colorCode = color
+
+    when {
+        colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)\$")) -> {
+            colorCode = colorCode
+                .replace("#", "")
+                .replace("0x", "")
+            return hexToRgba(colorCode)
+        }
+        colorCode.matches(Regex("^#([A-Fa-f0-9]{8})|([A-Fa-f0-9]{8})|0x([A-Fa-f0-9]{8})\$")) -> {
+            colorCode = colorCode
+                .replace("#", "")
+                .replace("0x", "")
+            return hex8ToRgba(colorCode)
+        }
+        else -> {
+            throw IllegalArgumentException("Not supported color specification.")
+        }
+    }
 }
 
 /**
  *
  */
-public fun toHsv(color: String, compensateOpacity: Boolean = false): HSV {
+public fun toHsv(
+    color: String,
+    compensateOpacity: Boolean = false,
+    opacityBackground: String = "#fff"
+): HSV {
     var colorCode = color
 
     when {
-        // done
         colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)$")) -> {
             colorCode = colorCode
                 .replace("#", "")
@@ -84,7 +115,7 @@ public fun toHsv(color: String, compensateOpacity: Boolean = false): HSV {
             colorCode = colorCode
                 .replace("#", "")
                 .replace("0x", "")
-            return hex8ToHsv(colorCode, compensateOpacity)
+            return hex8ToHsv(colorCode, compensateOpacity, opacityBackground)
         }
         // done
         colorCode.startsWith("rgb(", true) -> {
