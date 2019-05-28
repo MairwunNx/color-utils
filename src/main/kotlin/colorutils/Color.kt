@@ -76,7 +76,7 @@ public fun toRgba(color: String): RGBA {
     var colorCode = color
 
     when {
-        colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)\$")) -> {
+        (colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)\$")) && colorCode.length < 8) -> {
             colorCode = colorCode
                 .replace("#", "")
                 .replace("0x", "")
@@ -105,7 +105,7 @@ public fun toHsv(
     var colorCode = color
 
     when {
-        colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)$")) -> {
+        (colorCode.matches(Regex("^#([A-Fa-f0-9]*)|([A-Fa-f0-9]*)|0x([A-Fa-f0-9]*)$")) && colorCode.length < 8) -> {
             colorCode = colorCode
                 .replace("#", "")
                 .replace("0x", "")
@@ -117,7 +117,6 @@ public fun toHsv(
                 .replace("0x", "")
             return hex8ToHsv(colorCode, compensateOpacity, opacityBackground)
         }
-        // done
         colorCode.startsWith("rgb(", true) -> {
             colorCode = colorCode.substring(3)
             return rgbToHsv(colorCode)

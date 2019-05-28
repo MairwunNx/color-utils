@@ -3,7 +3,6 @@ package colorutils
 import javafx.scene.paint.Color
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import kotlin.math.roundToInt
 
 internal class ColorKtTest {
     private val colorRGB: Color = Color.web("0078D7")
@@ -13,6 +12,22 @@ internal class ColorKtTest {
         0.215,
         0.6
     )
+
+    @Test
+    fun hexToRgbaTest() {
+        assertEquals(
+            "rgba(85, 102, 68, 255)",
+            toRgba("564").toString() // #556644
+        )
+    }
+
+    @Test
+    fun hex8ToRgbaTest() {
+        assertEquals(
+            "rgba(85, 102, 68, 230)",
+            toRgba("556644E6").toString() // #556644
+        )
+    }
 
 //    @Test
 //    fun validateToRGB() {

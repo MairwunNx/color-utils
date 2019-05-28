@@ -59,4 +59,15 @@ internal class HsvHelperKtTest {
         }
         println("hex8WithOpacityWithCompensateOpacityToHsvTest done with ${elapsed}ms.")
     }
+
+    @Test
+    internal fun rgbToHsvTest() {
+        val elapsed = measureTimeMillis {
+            Assertions.assertEquals(
+                "hsv(0, 0%, 17%)",
+                rgbToHsv("43,43,43").toString()
+            )
+        }
+        println("rgbToHsvTest done with ${elapsed}ms.")
+    }
 }
