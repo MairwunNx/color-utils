@@ -63,6 +63,9 @@ public fun toRgb(
                 .replace("0x", "")
             return hex8ToRgb(colorCode, compensateOpacity, opacityBackground)
         }
+        colorCode.startsWith("rgba(", true) -> {
+            return rgbaToRgb(colorCode, compensateOpacity, opacityBackground)
+        }
         else -> {
             throw IllegalArgumentException("Not supported color specification.")
         }
@@ -87,6 +90,10 @@ public fun toRgba(color: String): RGBA {
                 .replace("#", "")
                 .replace("0x", "")
             return hex8ToRgba(colorCode)
+        }
+        colorCode.startsWith("rgba(", true) -> {
+            colorCode = colorCode.substring(4)
+            return rgbaToRgba(colorCode)
         }
         else -> {
             throw IllegalArgumentException("Not supported color specification.")
@@ -123,7 +130,7 @@ public fun toHsv(
         }
         colorCode.startsWith("rgba(", true) -> {
             colorCode = colorCode.substring(4)
-            return rgbaToHsv(colorCode, compensateOpacity)
+            return rgbaToHsv(colorCode, compensateOpacity, opacityBackground)
         }
         colorCode.startsWith("hsv(", true) -> {
             colorCode = colorCode.substring(3)

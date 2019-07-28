@@ -27,3 +27,19 @@ internal fun hex8ToRgb(
         toRgb(hex8Color.dropLast(2))
     }
 }
+
+internal fun rgbaToRgb(
+    rgbaColor: String,
+    compensateOpacity: Boolean,
+    opacityBackground: String
+): RGB {
+    return if (compensateOpacity) {
+        compensateOpacity(
+            toRgba(rgbaColor),
+            toRgb(opacityBackground)
+        )
+    } else {
+        println(rgbaColor.trimEnd(','))
+        toRgb(rgbaColor.trimEnd(','))
+    }
+}

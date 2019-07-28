@@ -10,7 +10,7 @@ internal fun hexToHsv(hexColor: String): HSV = rgbToHsv(
 
 internal fun hex8ToHsv(
     hex8Color: String,
-    compensateOpacity: Boolean,
+    compensateOpacity: Boolean = false,
     opacityBackground: String = "#fff"
 ): HSV {
     return if (!compensateOpacity) {
@@ -35,8 +35,24 @@ internal fun rgbToHsv(rgbColor: String): HSV {
     )
 }
 
-internal fun rgbaToHsv(rgbaColor: String, compensateOpacity: Boolean): HSV {
-    throw NotImplementedError()
+internal fun rgbaToHsv(
+    rgbaColor: String,
+    compensateOpacity: Boolean = false,
+    opacityBackground: String = "#fff"
+): HSV {
+    println("color: $rgbaColor, compensate?: $compensateOpacity")
+//    println(toRgb(
+//        rgbaColor,
+//        compensateOpacity,
+//        opacityBackground
+//    ).toString())
+    return rgbToHsv(removeUnnecessaryChars(
+        toRgb(
+            rgbaColor,
+            compensateOpacity,
+            opacityBackground
+        ).toString()
+    ))
 }
 
 internal fun hsvToHsv(hsvColor: String): HSV {

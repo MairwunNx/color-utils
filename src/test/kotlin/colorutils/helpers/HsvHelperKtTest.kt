@@ -70,4 +70,15 @@ internal class HsvHelperKtTest {
         }
         println("rgbToHsvTest done with ${elapsed}ms.")
     }
+
+    @Test
+    internal fun rgbaToHsvTest() {
+        val elapsed = measureTimeMillis {
+            Assertions.assertEquals(
+                "hsv(0, 0%, 25%)",
+                rgbaToHsv("rgba(43, 43, 43, 230)", true).toString()
+            )
+        }
+        println("rgbaToHsvTest done with ${elapsed}ms.")
+    }
 }
